@@ -14,9 +14,11 @@ var money = 0
 var money_drop = 50
 var money_per_beacon = 1000
 
+var siren = false
+
 sync var players = {}
 var player_data = {"steer": 0, "engine": 0, "brakes": 0,
-		 "position": null, "speed": 0, "money": 0}
+		 "position": null, "speed": 0, "money": 0, "siren": false}
 
 
 func _ready():
@@ -41,6 +43,7 @@ func join_team():
 	else:
 		$CopMesh.queue_free()
 		$Arrow.queue_free()
+		$Siren.queue_free()
 
 
 func _physics_process(delta):
@@ -53,6 +56,9 @@ func _physics_process(delta):
 	steering = players[name].steer
 	engine_force = players[name].engine
 	brake = players[name].brakes
+	
+	if is_in_group("cops"):
+		check_siren()
 
 
 func drive(delta):
@@ -179,9 +185,29 @@ func spawn_money():
 	get_parent().get_parent().add_child(moneybag)
 
 
+func _input(event):
+	if event.is_action_pressed("car_sound") and is_local_Player() and is_in_group("cops"):
+		siren = !siren
+		if not Network.local_player_id == 1:
+			rpc_id(1, "toggle_siren", name, siren)
+		else:
+			toggle_siren(name, siren)
 
 
+remote func toggle_siren(id, siren_state):
+	players[id]["siren"] = siren_state
 
+
+func check_siren():
+	if players[name]["siren"]:
+		if not $Siren/AudioStreamPlayer3D.playing:
+			$Siren/AudioStreamPlayer3D.play()
+		$Siren/SirenMesh/SpotLight.show()
+		$Siren/SirenMesh/SpotLight2.show()
+	else:
+		$Siren/AudioStreamPlayer3D.stop()
+		$Siren/SirenMesh/SpotLight.hide()
+		$Siren/SirenMesh/SpotLight2.hide()
 
 
 
