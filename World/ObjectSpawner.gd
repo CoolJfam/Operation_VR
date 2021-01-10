@@ -14,6 +14,7 @@ var number_of_dumpsters = 25
 var number_of_scaffolding = 25
 var number_of_cafes = 20
 
+signal cop_spawn
 
 func generate_props(tile_list, size, plazas):
 	tiles = tile_list
@@ -56,6 +57,7 @@ sync func spawn_goal(tile):
 	var goal = preload("res://Beacon/Goal.tscn").instance()
 	goal.translation = Vector3( (tile.x * 20) +10, tile.y, (tile.z*20)+10)
 	add_child(goal, true)
+	emit_signal("cop_spawn", goal.translation)
 
 
 func place_cars():

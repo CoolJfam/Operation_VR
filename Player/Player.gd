@@ -14,6 +14,10 @@ var money = 0
 var money_drop = 50
 var money_per_beacon = 1000
 
+export var max_arrest_value = 750
+var arrest_value = 0
+var criminal_detected = false
+
 var siren = false
 
 sync var players = {}
@@ -23,6 +27,7 @@ var player_data = {"steer": 0, "engine": 0, "brakes": 0,
 
 func _ready():
 	join_team()
+	$PlayerBillboard/Viewport/TextureProgress.max_value = max_arrest_value
 	players[name] = player_data
 	players[name].position = transform
 	$PlayerBillboard/Viewport/PlayerLabel.text = Network.players[int(name)]["Player_name"]
@@ -62,6 +67,9 @@ func _physics_process(delta):
 	
 	if is_in_group("cops"):
 		check_siren()
+	
+	if criminal_detected:
+		increment_arrest_value()
 
 
 func drive(delta):
@@ -168,6 +176,7 @@ remote func display_money(cash):
 
 func money_delivered():
 	get_tree().call_group("Announcement", "money_stashed", SaveGame.save_data["Player_name"], money)
+	get_tree().call_group("game_state", "update_gamestate", money, 0)
 	money = 0
 	manage_money()
 
@@ -176,6 +185,8 @@ func _on_Player_body_entered(body):
 	if body.has_node("Money"):
 		body.queue_free()
 		money += money_drop
+		if is_in_group("cops"):
+			get_tree().call_group("game_state", "update_gamestate", 0, money)
 	elif money > 0 and not is_in_group("cops"):
 		spawn_money()
 		money -= money_drop
@@ -203,14 +214,31 @@ remote func toggle_siren(id, siren_state):
 
 func check_siren():
 	if players[name]["siren"]:
+		$Siren/ArrestArea.monitoring = true
 		if not $Siren/AudioStreamPlayer3D.playing:
 			$Siren/AudioStreamPlayer3D.play()
 		$Siren/SirenMesh/SpotLight.show()
 		$Siren/SirenMesh/SpotLight2.show()
 	else:
+		$Siren/ArrestArea.monitoring = false
 		$Siren/AudioStreamPlayer3D.stop()
 		$Siren/SirenMesh/SpotLight.hide()
 		$Siren/SirenMesh/SpotLight2.hide()
+
+
+func _on_ArrestArea_body_entered(body):
+	body.criminal_detected = true
+
+
+func _on_ArrestArea_body_exited(body):
+	body.criminal_detected = false
+
+
+func increment_arrest_value():
+	arrest_value += 1
+	$PlayerBillboard/Viewport/TextureProgress.value = arrest_value
+	if arrest_value == max_arrest_value:
+		get_tree().call_group("Announcement", "victory", false)
 
 
 
