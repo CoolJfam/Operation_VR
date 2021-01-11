@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 onready var NameTextbox = $VBoxContainer/CenterContainer/GridContainer/NameTextbox
 onready var port = $VBoxContainer/CenterContainer/GridContainer/PortTextbox
