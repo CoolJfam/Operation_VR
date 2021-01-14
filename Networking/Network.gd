@@ -40,6 +40,7 @@ func add_to_player_list():
 	player_data = SaveGame.save_data
 	players[local_player_id] = player_data
 	players[local_player_id]["is_cop"] = is_cop
+	players[local_player_id]["paint_color"] = SaveGame.save_data["local_paint_color"]
 
 
 func _connected_to_server():

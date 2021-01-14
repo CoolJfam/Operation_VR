@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://World/World.gd" type="Script" id=1]
 [ext_resource path="res://Tiles/newcity.meshlib" type="MeshLibrary" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://World/Border.tscn" type="PackedScene" id=4]
 [ext_resource path="res://World/ObjectSpawner.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Props/Zeppelin/Zeppelin.tscn" type="PackedScene" id=6]
-[ext_resource path="res://SFX/Toby Fox - Megalovania.ogg" type="AudioStream" id=7]
 
 [node name="World" type="Spatial" groups=[
 "GameState",
@@ -19,7 +18,7 @@ script = ExtResource( 1 )
 mesh_library = ExtResource( 2 )
 cell_size = Vector3( 20, 1, 20 )
 data = {
-"cells": PoolIntArray( 0, 0, 536870916, 1, 0, 536870914, 2, 0, 15, 65533, 0, 15, 65534, 0, 1610612751, 65535, 0, 536870921, 0, 1, 536870917, 1, 1, 5, 2, 1, 536870919, 65533, 1, 536870927, 65534, 1, 9, 65535, 1, 536870916, 0, 2, 15, 1, 2, 15, 2, 2, 536870927, 65533, 2, 15, 65534, 2, 14, 65535, 2, 15, 0, 65533, 1, 1, 65533, 3, 2, 65533, 15, 65533, 65533, 15, 65534, 65533, 13, 65535, 65533, 5, 0, 65534, 4, 1, 65534, 10, 2, 65534, 15, 65533, 65534, 13, 65534, 65534, 5, 65535, 65534, 1, 0, 65535, 9, 1, 65535, 1610612736, 2, 65535, 1610612743, 65533, 65535, 1610612749, 65534, 65535, 1073741829, 65535, 65535, -1073741818 )
+"cells": PoolIntArray( 0, 0, 4, 1, 0, 2, 2, 0, 15, 65533, 0, 15, 65534, 0, 1073741839, 65535, 0, 1610612745, 0, 1, 1610612741, 1, 1, 5, 2, 1, 7, 65533, 1, 15, 65534, 1, 9, 65535, 1, -1073741820, 0, 2, 15, 1, 2, 15, 2, 2, 15, 65533, 2, 15, 65534, 2, 14, 65535, 2, 15, 0, 65533, 1610612737, 1, 65533, 3, 2, 65533, 536870927, 65533, 65533, 15, 65534, 65533, 13, 65535, 65533, 5, 0, 65534, 4, 1, 65534, 10, 2, 65534, 15, 65533, 65534, 13, 65534, 65534, 536870917, 65535, 65534, 1, 0, 65535, 536870921, 1, 65535, 0, 2, 65535, 536870919, 65533, 65535, 13, 65534, 65535, 536870917, 65535, 65535, 536870918 )
 }
 script = ExtResource( 3 )
 __meta__ = {
@@ -33,7 +32,6 @@ __meta__ = {
 [node name="Zeppelin" parent="." instance=ExtResource( 6 )]
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 7 )
 unit_db = 25.0
 unit_size = 100.0
 max_db = 6.0

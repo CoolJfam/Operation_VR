@@ -10,6 +10,7 @@ func _ready():
 	NameTextbox.text = SaveGame.save_data["Player_name"]
 	selected_IP.text = Network.DEFAULT_IP
 	port.text = str(Network.DEFAULT_PORT)
+	$VBoxContainer/CenterContainer/GridContainer/ColorPickerButton.color = SaveGame.save_data["local_paint_color"]
 
 
 func _on_HostButton_pressed():
@@ -59,6 +60,12 @@ func _on_Tween_tween_completed(object, key):
 	var button = $VBoxContainer/CenterContainer/GridContainer/TeamCheck
 	button.set_item_disabled(0, false)
 	button.set_item_disabled(1, false)
+
+
+func _on_ColorPickerButton_color_changed(color):
+	$LobbyBackground.new_color(color)
+	SaveGame.save_data["local_paint_color"] = color.to_html()
+	SaveGame.save_game()
 
 
 

@@ -10,6 +10,8 @@ const MAX_SPEED = 30
 var steer_target = 0.0
 var steer_angle = 0.0
 
+var paint_color = Color(1,1,0)
+
 var money = 0
 var money_drop = 50
 var money_per_beacon = 1000
@@ -26,17 +28,16 @@ var player_data = {"steer": 0, "engine": 0, "brakes": 0,
 
 
 func _ready():
+	paint_color = Network.players[int (name)]["paint_color"]
 	join_team()
-	$PlayerBillboard/Viewport/TextureProgress.max_value = max_arrest_value
+	label_car()
+	paint_car()
 	players[name] = player_data
 	players[name].position = transform
-	$PlayerBillboard/Viewport/PlayerLabel.text = Network.players[int(name)]["Player_name"]
 	
 	if not is_local_Player():
 		$Camera.queue_free()
 		$GUI.queue_free()
-	else:
-		$PlayerBillboard/Viewport/PlayerLabel.queue_free()
 
 
 func is_local_Player():
@@ -48,10 +49,29 @@ func join_team():
 		add_to_group("cops")
 		collision_layer = 4
 		$RobberMesh.queue_free()
+		$CopMesh.name = "CarBody"
 	else:
 		$CopMesh.queue_free()
 		$Arrow.queue_free()
 		$Siren.queue_free()
+		$RobberMesh.name = "CarBody"
+
+
+func label_car():
+	if is_local_Player():
+		$PlayerBillboard/Viewport/PlayerLabel.queue_free()
+	else:
+		$PlayerBillboard/Viewport/TextureProgress.max_value = max_arrest_value
+		$PlayerBillboard/Viewport/PlayerLabel.text = Network.players[int(name)]["Player_name"]
+
+
+func paint_car():
+	var paint = SpatialMaterial.new()
+	paint.metallic = 0.75
+	paint.metallic_specular = 0.25
+	paint.roughness = 0.25
+	paint.albedo_color = paint_color
+	$CarBody.set_surface_material(0,paint)
 
 
 func _physics_process(delta):
