@@ -16,6 +16,23 @@ var number_of_cafes = 20
 
 signal cop_spawn
 
+
+func _ready():
+	set_multiplier()
+
+
+func set_multiplier():
+	number_of_beacons = number_of_beacons * Network.prop_multiplier
+	number_of_parked_cars = number_of_parked_cars * Network.prop_multiplier
+	number_of_billboards = number_of_billboards * Network.prop_multiplier
+	number_of_traffic_cones = number_of_traffic_cones * Network.prop_multiplier
+	number_of_hydrants = number_of_hydrants * Network.prop_multiplier
+	number_of_streetlights = number_of_streetlights * Network.prop_multiplier
+	number_of_dumpsters = number_of_dumpsters * Network.prop_multiplier
+	number_of_scaffolding = number_of_scaffolding * Network.prop_multiplier
+	number_of_cafes = number_of_cafes * Network.prop_multiplier
+
+
 func generate_props(tile_list, size, plazas):
 	tiles = tile_list
 	cafe_spots = plazas
