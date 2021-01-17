@@ -12,6 +12,11 @@ func _enter_tree():
 	get_tree().paused = true
 
 
+func _input(event):
+	if Input.is_action_just_pressed("menu"):
+		$AudioMenu.visible = !$AudioMenu.visible
+
+
 func _ready():
 	pass
 
