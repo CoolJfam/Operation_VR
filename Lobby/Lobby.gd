@@ -20,6 +20,7 @@ func _on_HostButton_pressed():
 	Network.is_cop = is_cop
 	Network.create_server()
 	Network.city_size = city_size
+	generate_city_seed()
 	get_tree().call_group("HostOnly", "show")
 	create_waiting_room()
 
@@ -30,6 +31,15 @@ func _on_JoinButton_pressed():
 	Network.is_cop = is_cop
 	Network.connect_to_server()
 	create_waiting_room()
+
+
+func generate_city_seed():
+	var world_seed = $VBoxContainer/CenterContainer/GridContainer/CitySeed.text
+	if world_seed == "":
+		randomize()
+		Network.world_seed = randi()
+	else:
+		Network.world_seed = hash(world_seed)
 
 
 func _on_NameTextbox_text_changed(new_text):
