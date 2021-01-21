@@ -5,7 +5,7 @@ const STEER_SPEED = 1
 
 const MAX_ENGINE_FORCE = 175
 const MAX_BRAKE_FORCE = 10
-const MAX_SPEED = 30
+const MAX_SPEED = 25
 
 var steer_target = 0.0
 var steer_angle = 0.0
