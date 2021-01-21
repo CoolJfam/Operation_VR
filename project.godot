@@ -80,5 +80,7 @@ menu={
 
 [rendering]
 
+quality/reflections/texture_array_reflections=false
+quality/reflections/high_quality_ggx=false
 quality/filters/msaa=3
 environment/default_environment="res://default_env.tres"

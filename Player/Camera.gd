@@ -17,6 +17,7 @@ var last_lookat
 func _ready():
 	make_neighboorhoods()
 	set_as_toplevel(true)
+	environment = load(Network.enviroment)
 	follow_this = get_node(follow_this_path)
 	last_lookat = follow_this.global_transform.origin
 

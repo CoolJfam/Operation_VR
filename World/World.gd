@@ -44,6 +44,10 @@ func unpaused():
 	get_tree().paused=false
 	spawn_local_player()
 	rpc("spawn_remote_player", Network.local_player_id)
+	if Network.enviroment == "res://Enviroments/Night.tres":
+		$Sun.queue_free()
+	else:
+		get_tree().call_group("Lights", "queue_free")
 
 
 remote func update_gamestate(stashed, recovered):

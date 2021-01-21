@@ -6,6 +6,7 @@ onready var selected_IP = $VBoxContainer/CenterContainer/GridContainer/IPTextbox
 
 var is_cop = false
 var city_size
+var enviromennt = "res://Enviroments/Night.tres"
 
 func _ready():
 	NameTextbox.text = SaveGame.save_data["Player_name"]
@@ -20,6 +21,7 @@ func _on_HostButton_pressed():
 	Network.is_cop = is_cop
 	Network.create_server()
 	Network.city_size = city_size
+	Network.enviroment = enviromennt
 	generate_city_seed()
 	get_tree().call_group("HostOnly", "show")
 	create_waiting_room()
@@ -99,6 +101,14 @@ func _on_CitySizePicker_item_selected(index):
 
 func _on_AudioButton_pressed():
 	$AudioMenu.popup_centered()
+
+
+func _on_TimeCheck_item_selected(index):
+	match index:
+		0:
+			enviromennt = "res://Enviroments/Night.tres"
+		1:
+			enviromennt = "res://Enviroments/Day.tres"
 
 
 
