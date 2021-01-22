@@ -10,7 +10,7 @@ func money_stashed(player, money):
 
 
 sync func announce_money(player, money):
-	$Label.text = "$" + str(money) + " has neen stashed by " + SaveGame.save_data["Player_name"]
+	$Label.text = "$" + str(money) + " has been stashed by " + SaveGame.save_data["Player_name"]
 	announce()
 
 sync func announce_crime(location):
