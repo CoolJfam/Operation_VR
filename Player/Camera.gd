@@ -20,6 +20,7 @@ func _ready():
 	environment = load(Network.enviroment)
 	follow_this = get_node(follow_this_path)
 	last_lookat = follow_this.global_transform.origin
+	check_saved_settings()
 
 
 func _physics_process(delta):
@@ -65,7 +66,41 @@ func update_speed(speed):
 	fov = min(fov, MAX_CAMERA_ANGLE)
 
 
+func check_saved_settings():
+	if SaveGame.save_data["far_sight"]:
+		far = 750
+	else:
+		far = 250
+	environment.dof_blur_far_enabled = SaveGame.save_data["dof"]
+	environment.ss_reflections_enabled = SaveGame.save_data["reflections"]
+	environment.fog_enabled = SaveGame.save_data["fog"]
 
+
+func far_sight(value):
+	if value:
+		far = 750
+	else:
+		far = 250
+	SaveGame.save_data["far_sight"] = value
+	SaveGame.save_game()
+
+
+func dof(value):
+	environment.dof_blur_far_enabled = value
+	SaveGame.save_data["dof"] = value
+	SaveGame.save_game()
+
+
+func reflections(value):
+	environment.ss_reflections_enabled = value
+	SaveGame.save_data["reflections"] = value
+	SaveGame.save_game()
+
+
+func fog(value):
+	environment.fog_enabled = value
+	SaveGame.save_data["fog"] = value
+	SaveGame.save_game()
 
 
 
